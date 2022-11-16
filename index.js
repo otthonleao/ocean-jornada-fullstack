@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.send('Hello World');
@@ -31,6 +34,13 @@ app.get("/mensagens", function (req, res) {
 app.get("/mensagens/:id", function (req, res) {
 	const id = req.params.id - 1; //Subtrai 1 na requisição para ficar de acordo com o que o usuário quer na posição da lista que começa em 0. Então se o usuário quer a posição 2, na array vai ser 1.
 	const mensagem = mensagens[id];
+	res.send(mensagem);
+});
+
+// - [POST] /mensagens - Cria uma nova mensagem
+app.post("/mensagens", function (req, res) {
+	const mensagem = req.body.mensagem;
+	console.log(mensagem);
 	res.send(mensagem);
 });
 
